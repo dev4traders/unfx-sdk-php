@@ -1,6 +1,6 @@
 <?php
 
-namespace D4T\UnxSdk\Exceptions;
+namespace D4T\UnFxSdk\Exceptions;
 
 use Exception;
 

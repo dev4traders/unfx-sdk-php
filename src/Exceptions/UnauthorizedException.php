@@ -1,6 +1,6 @@
 <?php
 
-namespace D4T\MT4Sdk\Exceptions;
+namespace D4T\UnFxSdk\Exceptions;
 
 use Exception;
 

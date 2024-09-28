@@ -3,9 +3,7 @@
 namespace D4T\UnFxSdk;
 
 use GuzzleHttp\Client;
-use Illuminate\Support\Str;
 use GuzzleHttp\ClientInterface;
-use Illuminate\Support\Facades\Http;
 use D4T\UnFxSdk\Resources\AccountCredentails;
 use D4T\UnFxSdk\Requests\AccountCreateRequest;
 
@@ -21,10 +19,10 @@ class Manager
     ) {
         $this->client ??= new Client([
             'http_errors' => false,
-            'base_uri' => $this->endpoint.'/mt5/api/',
+            'base_uri' => $this->endpoint,
             'headers' => [
-                'MID' => "MID: {$this->mid}",
-                'Key' => "Key: {$this->token}",
+                'MID' => "{$this->mid}",
+                'Key' => "{$this->token}",
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ],
@@ -46,7 +44,7 @@ class Manager
         return $this->mid;
     }
 
-    public function ping() : bool
+    public function ping(): bool
     {
         $this->get("ping");
 
@@ -63,8 +61,35 @@ class Manager
         return new AccountCredentails($attributes, $this);
     }
 
-    public static function generatePassword() {
-        return Str::password(8);
+    const PermittedNumbers = '0123456789';
+    const PermittedChars = 'abcdefghijklmnopqrstuvwxyz';
+    const PermittedUppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const PermittedSymbols = '*!@';
+
+    public static function generatePassword()
+    {
+        return str_shuffle(
+            self::generateString(self::PermittedNumbers, 2).
+            self::generateString(self::PermittedChars, 2).
+            self::generateString(self::PermittedUppers, 2).
+            self::generateString(self::PermittedSymbols, 2)
+        );
     }
 
+    private static function generateString($input, $strength = 16)
+    {
+
+        $input_length = strlen($input);
+
+        $random_string = '';
+
+        for ($i = 0; $i < $strength; $i++) {
+
+            $random_character = $input[mt_rand(0, $input_length - 1)];
+
+            $random_string .= $random_character;
+        }
+
+        return $random_string;
+    }
 }

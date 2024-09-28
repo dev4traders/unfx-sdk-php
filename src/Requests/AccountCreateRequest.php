@@ -15,7 +15,6 @@ class AccountCreateRequest {
         public ?string $MainPass = null,
         public ?string $InvestorPass = null,
     ) {
-
     }
 
 }
