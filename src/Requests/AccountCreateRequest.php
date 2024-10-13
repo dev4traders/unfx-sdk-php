@@ -7,7 +7,7 @@ class AccountCreateRequest {
     public function __construct(
         public string $FirstName,
         public string $LastName,
-        public string $Email,
+        public string $Mail,
         public string $Phone,
         public int $Leverage,
         public string $Group,
